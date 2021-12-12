@@ -12,8 +12,8 @@ class Interface
     @game = Game.new(UserPlayer.new(name), Dealer.new)
 
     loop do
-      puts 'Press 1 to start the game: '
-      puts 'Press 0 to exit: '
+      puts "\nPress 1 to start the game: "
+      puts "Press 0 to exit: "
       answer = gets.chomp.to_i
       break if answer.zero?
 
@@ -26,16 +26,15 @@ class Interface
 
   def start
     @game.new_game
-
     loop do
-      puts "\n"
+      puts "\nPlayer cards are: "
       @game.user.pack.cards.each do |card|
         puts "#{card.name}#{card.suit}  #{card.value}"
       end
       puts "score: #{@game.user.pack.score}\n\n"
 
-      puts 'Press 1 to skip your turn: '
-      puts 'Press 2 to take a card: '
+      puts 'Press 1 to skip your turn: ' if @game.step < 2
+      puts 'Press 2 to take a card: ' if @game.user.pack.cards.size < 3
       puts 'Press 3 to open cards: '
 
       choice = gets.chomp.to_i

@@ -6,11 +6,12 @@ require './game_desk.rb'
 
 # This class describes the game process
 class Game
-  attr_reader :user, :dealer
+  attr_reader :user, :dealer, :step
 
   def initialize(user, dealer)
     @user = user
     @dealer = dealer
+    @step = 0
   end
 
   def new_game
@@ -25,6 +26,7 @@ class Game
   def user_choice(arg)
     case arg
     when 1
+      @step += 1
       return
     when 2
       if @user.pack.cards.size < 3
@@ -47,7 +49,7 @@ class Game
   end
 
   def result
-    puts 'Game result is...'
+    puts "\nGame result is...\n"
 
     if @user.pack.score > 21 && @dealer.pack.score > 21\
      || @user.pack.score == @dealer.pack.score
@@ -67,6 +69,20 @@ class Game
       puts "#{@dealer.name} won the game and got #{@game_bank} money!"
       @dealer.bank += @game_bank
     end
+
+    puts "\n#{@user.name} cards are: "
+    @user.pack.cards.each do |card|
+    	puts "#{card.name}#{card.suit} #{card.value}"
+    end
+
+    puts "Score: #{@user.pack.score}"
+
+    puts "\n#{@dealer.name} cards are: "
+    @dealer.pack.cards.each do |card|
+   	puts "#{card.name}#{card.suit} #{card.value}"
+    end
+
+    puts "Score: #{@dealer.pack.score}"
   end
 
   def take_cards(player)
